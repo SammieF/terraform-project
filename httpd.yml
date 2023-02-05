@@ -1,0 +1,23 @@
+---
+- name: Installation and configuration of apache2
+  hosts: all
+  become: yes
+  tasks:
+    - name: install httpd server
+      yum:
+        name: httpd
+        state: present
+    - name: start httpd service
+      service:
+        name: httpd
+        state: started
+    - name: set server1 timezone
+      timezone: 
+        name: Africa/Lagos
+    - name: display simple html page
+      shell: echo "<h2>My detail is $(hostname -f) and today's date is $(date)</h2>" > /var/www/html/index.html
+    - name: restart httpd service
+      service:
+        name: httpd
+        state: restarted
+
